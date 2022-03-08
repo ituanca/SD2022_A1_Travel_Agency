@@ -1,22 +1,20 @@
 package controller;
 
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
-public class Controller {
-    public BorderPane mainPane;
-    public Button btnStart;
-    public AnchorPane anchorPane;
+public class SignUpController{
 
-    public void start(ActionEvent actionEvent) {
+    public Button btnGoBack;
+    public AnchorPane signUpPane;
+    public BorderPane mainPaneSignUp;
+
+    public void goBack(ActionEvent actionEvent) {
         FxmlLoader object = new FxmlLoader();
         Pane view = object.getPage("home");
-        mainPane.setCenter(view);
+        mainPaneSignUp.setCenter(view);
     }
-
 }
