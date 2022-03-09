@@ -2,6 +2,7 @@ package repository;
 
 import model.TravelAgency;
 import model.User;
+import org.hibernate.Criteria;
 
 import javax.persistence.*;
 
@@ -24,24 +25,15 @@ public class TravelAgencyRepository {
                 .executeUpdate();
     }
 
-    public String verifyPassword(String password) {
+    public String verifyPassword(String string) {
         try{
-            Query query = em.createQuery("SELECT t from travelagency t WHERE t.password = :password", TravelAgency.class)
-                    .setParameter("password", password);
+            Query query = em.createQuery("SELECT u from TravelAgency u WHERE u.password = :password", TravelAgency.class)
+                    .setParameter("password", string);
             TravelAgency travelAgency = (TravelAgency) query.getSingleResult();
             return travelAgency.getPassword();
         }catch(NoResultException e) {
             return null;
         }
-
-//        try{
-//            TravelAgency travelAgency = em.find(TravelAgency.class, string);
-//            System.out.println(travelAgency);
-//            //System.out.println(travelAgency.getPassword());
-//            return true;
-//        }catch(NoResultException e){
-//            return false;
-//        }
 
     }
 
