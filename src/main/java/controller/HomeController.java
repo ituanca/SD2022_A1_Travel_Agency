@@ -9,6 +9,7 @@ public class HomeController {
     public Button btnLogIn;
     public Button btnSignUp;
     public BorderPane mainPaneHome;
+    public Button btnGoBack;
 
     public void signUp(ActionEvent actionEvent) {
         FxmlLoader object = new FxmlLoader();
@@ -23,4 +24,9 @@ public class HomeController {
     }
 
 
+    public void goBack(ActionEvent actionEvent) {
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("sample");
+        mainPaneHome.setCenter(view);
+    }
 }

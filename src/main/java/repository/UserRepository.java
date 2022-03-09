@@ -2,23 +2,65 @@ package repository;
 
 import model.User;
 
-import javax.persistence.EntityManager;
+import javax.persistence.*;
+import java.util.ArrayList;
+
 
 public class UserRepository {
 
-    public void insertUser(User newUser, EntityManager em){
+    private static final EntityManagerFactory entityManagerFactory =
+            Persistence.createEntityManagerFactory("ro.tutorial.lab.SD");
+    EntityManager em = entityManagerFactory.createEntityManager();
+
+
+    public void insertUser(String firstName, String lastName, String email, String username, String password){
+        em.getTransaction().begin();
+        createQueryForInsertUser(firstName, lastName, email, username, password);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    private void createQueryForInsertUser(String firstName, String lastName, String email, String username, String password){
+        int id  = findFirstAvailableId();
         em.createNativeQuery("INSERT INTO user (id, firstName, lastName, username, email, password) VALUES (?,?,?,?,?,?)")
-                .setParameter(1, newUser.getId())
-                .setParameter(2, newUser.getFirstName())
-                .setParameter(3, newUser.getLastName())
-                .setParameter(4, newUser.getUsername())
-                .setParameter(5, newUser.getEmail())
-                .setParameter(6, newUser.getPassword())
+                .setParameter(1, Integer.toString(id))
+                .setParameter(2, firstName)
+                .setParameter(3, lastName)
+                .setParameter(4, username)
+                .setParameter(5, email)
+                .setParameter(6, password)
                 .executeUpdate();
     }
 
-    public boolean checkIfExistent(String string , EntityManager em) {
+    public boolean checkIfExistent(String string) {
         User user = em.find(User.class, string);
         return user != null;
     }
+
+    public String findUsernameAndRetrievePassword(String string) {
+        try{
+            Query query = em.createQuery("SELECT u from User u WHERE u.username = :username", User.class)
+                .setParameter("username", string);
+            User user = (User) query.getSingleResult();
+            return user.getPassword();
+        }catch(NoResultException e) {
+            return null;
+        }
+    }
+
+    public boolean checkIfExistentId(String string){
+        User user = em.find(User.class, string);
+        return user != null;
+    }
+
+    public int findFirstAvailableId(){
+        int id;
+        for(id = 1; id < 100; id++){
+            if(!checkIfExistentId(Integer.toString(id))){
+                break;
+            }
+        }
+        return id;
+    }
+
 }

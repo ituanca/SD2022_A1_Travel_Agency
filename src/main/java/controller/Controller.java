@@ -12,6 +12,7 @@ public class Controller {
     public BorderPane mainPane;
     public Button btnStart;
     public AnchorPane anchorPane;
+    public Button btnTravellingAgency;
 
     public void start(ActionEvent actionEvent) {
         FxmlLoader object = new FxmlLoader();
@@ -19,4 +20,9 @@ public class Controller {
         mainPane.setCenter(view);
     }
 
+    public void logInAsAgency(ActionEvent actionEvent) {
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("agencyLogIn");
+        mainPane.setCenter(view);
+    }
 }

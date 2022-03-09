@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane id="mainPane" fx:id="mainPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <center>
       <AnchorPane id="anchorPane" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
@@ -17,7 +16,15 @@
                   <Font name="Comic Sans MS" size="30.0" />
                </font>
             </Label>
-            <Button id="btnStart" fx:id="btnStart" layoutX="287.0" layoutY="479.0" mnemonicParsing="false" onAction="#start" prefHeight="50.0" prefWidth="232.0" style="-fx-background-color: DARKBLUE;" text="Start your journey" textFill="WHITE">
+            <Button id="btnStart" fx:id="btnStart" layoutX="284.0" layoutY="427.0" mnemonicParsing="false" onAction="#start" prefHeight="50.0" prefWidth="232.0" style="-fx-background-color: DARKBLUE;" text="Start your journey" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Button id="btnTravellingAgency" fx:id="btnTravellingAgency" layoutX="286.0" layoutY="491.0" mnemonicParsing="false" onAction="#logInAsAgency" prefHeight="50.0" prefWidth="232.0" style="-fx-background-color: DARKBLUE;" text="Travelling Agency" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="18.0" />
                </font>

@@ -1,52 +1,68 @@
 package service;
 
-import model.User;
 import repository.UserRepository;
+import service.validators.*;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class UserService {
 
     UserRepository userRepository = new UserRepository();
 
-    public void insertUser(User newUser, EntityManager em){
-        if(newUser.getId().chars().allMatch(Character::isDigit) &&
-                newUser.getFirstName().chars().allMatch(Character::isLetter) &&
-                newUser.getLastName().chars().allMatch(Character::isLetter) &&
-                (!checkIfAlreadyExists(newUser.getId(), em)) &&
-                (!checkIfAlreadyExists(newUser.getUsername(), em)) &&
-                (!checkIfAlreadyExists(newUser.getEmail(), em)) &&
-                checkIfMinimumLength(newUser.getPassword()) && checkIfNotNull(newUser)) {
-            userRepository.insertUser(newUser, em);
-        }
+    public void insertUser(String firstName, String lastName, String email, String username, String password){
+        userRepository.insertUser(firstName, lastName, email, username, password);
     }
 
-    boolean checkIfAlreadyExists(String string, EntityManager em){
-        return userRepository.checkIfExistent(string, em);
+    public boolean checkIfNotEmptySignUp(String firstName, String lastName, String email, String username, String password){
+        EmptyFieldValidator emptyFieldValidator = new EmptyFieldValidator();
+        return emptyFieldValidator.validate(firstName) == CasesOfInvalidations.GOOD &&
+                emptyFieldValidator.validate(lastName) == CasesOfInvalidations.GOOD &&
+                emptyFieldValidator.validate(email) == CasesOfInvalidations.GOOD &&
+                emptyFieldValidator.validate(username) == CasesOfInvalidations.GOOD &&
+                emptyFieldValidator.validate(password) == CasesOfInvalidations.GOOD;
     }
 
-    boolean checkIfNotNull(User newUser){
-        return newUser.getId() != null &&
-                newUser.getUsername() != null &&
-                newUser.getFirstName() != null &&
-                newUser.getLastName() != null &&
-                newUser.getEmail() != null &&
-                newUser.getPassword() != null;
+    public boolean checkIfNotEmptyLogIn(String username, String password){
+        EmptyFieldValidator emptyFieldValidator = new EmptyFieldValidator();
+        return emptyFieldValidator.validate(username) == CasesOfInvalidations.GOOD &&
+                emptyFieldValidator.validate(password) == CasesOfInvalidations.GOOD;
     }
 
-    boolean checkIfMinimumLength(String string){
-        if(string.length() < 7){
-            System.out.println("Password should have at least 8 characters.");
-            return false;
-        }
-        return true;
+    public String checkIfUsernameExistsAndFindPassword(String username){
+        return userRepository.findUsernameAndRetrievePassword(username);
     }
 
-    public void findByUsername(String username , EntityManager em){
-        if (userRepository.checkIfExistent(username, em)){
-            System.out.println("Username " + username + " found.");
-        }else{
-            System.out.println("Username " + username + " not found.");
-        }
+    public boolean checkIfValidName(String name){
+        NameValidator nameValidator = new NameValidator();
+        return nameValidator.validate(name) == CasesOfInvalidations.GOOD;
+    }
+
+    public boolean checkIfValidEmail(String email){
+        EmailValidator emailValidator = new EmailValidator();
+        return emailValidator.validate(email) == CasesOfInvalidations.GOOD;
+    }
+
+    public boolean checkIfValidUsername(String username){
+        UsernameValidator emailValidator = new UsernameValidator();
+        return emailValidator.validate(username) == CasesOfInvalidations.GOOD;
+    }
+
+    public String checkIfValidPassword(String password){
+        PasswordValidator passwordValidator = new PasswordValidator();
+        if(passwordValidator.validate(password) == CasesOfInvalidations.TOO_SHORT){
+            return "too short";
+        }else if(passwordValidator.validate(password) == CasesOfInvalidations.INVALID_FORM_PASSWORD){
+            return "invalid";
+        }return "ok";
+    }
+
+    boolean checkIfAlreadyExists(String string){
+        return userRepository.checkIfExistent(string);
+    }
+
+    public boolean findByUsername(String username){
+        return userRepository.checkIfExistent(username);
     }
 }
