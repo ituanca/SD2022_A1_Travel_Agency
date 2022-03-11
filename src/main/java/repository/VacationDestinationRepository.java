@@ -1,11 +1,11 @@
 package repository;
 
 import model.Destination;
-import model.User;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class VacationDestinationRepository {
 
@@ -43,6 +43,58 @@ public class VacationDestinationRepository {
             }
         }
         return id;
+    }
+
+    public void deleteDestination( String destination){
+        em.getTransaction().begin();
+        createQueryForDeleteDestination(destination);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    private void createQueryForDeleteDestination(String destination){
+        em.createQuery("delete Destination where destination = :destination")
+                .setParameter("destination", destination)
+                .executeUpdate();
+    }
+
+    public ArrayList<String> selectDestinations() throws SQLException {
+        try{
+            Query query = em.createQuery("SELECT d from Destination d", Destination.class);
+            ArrayList<String> list = new ArrayList<>();
+            for(Object o : query.getResultList()){
+                Destination destination = (Destination)o;
+                list.add(destination.getDestination());
+            }
+            return list;
+        }catch(NoResultException e) {
+            return null;
+        }
+    }
+
+    public ArrayList<Destination> selectDestinationsObjects() throws SQLException {
+        try{
+            Query query = em.createQuery("SELECT d from Destination d", Destination.class);
+            ArrayList<Destination> list = new ArrayList<>();
+            for(Object o : query.getResultList()){
+                Destination destination = (Destination)o;
+                list.add(destination);
+            }
+            return list;
+        }catch(NoResultException e) {
+            return null;
+        }
+    }
+
+    public String findDestinationNameAndRetrieveId(String string) {
+        try{
+            Query query = em.createQuery("SELECT u from Destination u WHERE u.destination = :destination", Destination.class)
+                    .setParameter("destination", string);
+            Destination destination = (Destination) query.getSingleResult();
+            return destination.getId();
+        }catch(NoResultException e) {
+            return null;
+        }
     }
 
 }

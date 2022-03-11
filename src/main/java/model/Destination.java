@@ -1,9 +1,7 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -15,12 +13,16 @@ public class Destination {
     @Column
     private String destination;
 
+    @OneToMany(mappedBy = "destination")
+    private List<Package> packages;
+
     public Destination() {
     }
 
-    public Destination(String id, String destination) {
+    public Destination(String id, String destination, List<Package> packages) {
         this.id = id;
         this.destination = destination;
+        this.packages = packages;
     }
 
     public String getId() {
@@ -37,5 +39,13 @@ public class Destination {
 
     public void setDestination(String destination) {
         this.destination = destination;
+    }
+
+    public List<Package> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(List<Package> packages) {
+        this.packages = packages;
     }
 }

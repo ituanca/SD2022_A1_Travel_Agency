@@ -40,7 +40,6 @@ public class AddDestinationController {
         alert.show();
     }
 
-
     private boolean checkIfFieldIsNotEmpty(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         if(!destinationService.checkIfNotEmpty(getDestination())){

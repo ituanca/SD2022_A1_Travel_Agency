@@ -11,6 +11,7 @@ import service.VacationDestinationService;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -36,7 +37,7 @@ public class Main extends Application {
         //travellingAgencyService.insertAgencyPassword("1","agency123");
 
         //EntityManager em = entityManagerFactory.createEntityManager();
-        //service.VacationDestinationService destinationService = new VacationDestinationService();
+        service.VacationDestinationService destinationService = new VacationDestinationService();
         //destinationService.insertDestination("Maldive");
 
 //        Destination newDestination = new Destination("1", "Maldive");
@@ -48,6 +49,7 @@ public class Main extends Application {
 //                .executeUpdate();
 //        em.getTransaction().commit();
 //        em.close();
+
     }
 
     public static void main(String[] args) {
