@@ -15,13 +15,14 @@ public class AgencyLogInController {
     public PasswordField pfPassword;
     public Button btnLogIn;
     public BorderPane mainPaneAgencyLogIn;
+    public Button btnGoBack;
 
     service.TravellingAgencyService travellingAgencyService = new TravellingAgencyService();
 
     public void checkValidity(ActionEvent actionEvent) {
         if(checkIfFieldIsNotEmpty() && checkIfCorrectPassword()){
             FxmlLoader object = new FxmlLoader();
-            Pane view = object.getPage("home");
+            Pane view = object.getPage("agencyOptions");
             mainPaneAgencyLogIn.setCenter(view);
         }
     }
@@ -48,11 +49,10 @@ public class AgencyLogInController {
 
     public void goBack(ActionEvent actionEvent) throws IOException {
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("home");
+        Pane view = object.getPage("sample");
         mainPaneAgencyLogIn.setCenter(view);
     }
 
     private String getPassword() { return pfPassword.getText(); }
-
 
 }

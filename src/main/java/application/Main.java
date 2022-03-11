@@ -1,16 +1,12 @@
 package application;
 
-import controller.FxmlLoader;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.TravelAgency;
-import service.TravellingAgencyService;
-import service.UserService;
+import model.Destination;
+import service.VacationDestinationService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,6 +14,9 @@ import javax.persistence.Persistence;
 import java.util.Objects;
 
 public class Main extends Application {
+
+//    private static final EntityManagerFactory entityManagerFactory =
+//            Persistence.createEntityManagerFactory("ro.tutorial.lab.SD");
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -35,6 +34,20 @@ public class Main extends Application {
 
         //service.TravellingAgencyService travellingAgencyService = new TravellingAgencyService();
         //travellingAgencyService.insertAgencyPassword("1","agency123");
+
+        //EntityManager em = entityManagerFactory.createEntityManager();
+        //service.VacationDestinationService destinationService = new VacationDestinationService();
+        //destinationService.insertDestination("Maldive");
+
+//        Destination newDestination = new Destination("1", "Maldive");
+//        em.getTransaction().begin();
+//        em.persist(newDestination);
+//        em.createNativeQuery("INSERT INTO destination (id, destination) VALUES (?,?)")
+//                .setParameter(1, newDestination.getId())
+//                .setParameter(2, newDestination.getDestination())
+//                .executeUpdate();
+//        em.getTransaction().commit();
+//        em.close();
     }
 
     public static void main(String[] args) {

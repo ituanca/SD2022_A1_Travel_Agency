@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<BorderPane id="mainPaneAgencyLogIn" fx:id="mainPaneAgencyLogIn" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AgencyLogInController">
+<BorderPane id="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;?import javafx.scene.control.Button?&gt;&lt;?import javafx.scene.effect.Glow?&gt;&lt;?import javafx.scene.text.Font?&gt;&lt;Button id=&quot;btnGoBack&quot; fx:id=&quot;btnGoBack&quot; layoutX=&quot;621.0&quot; layoutY=&quot;499.0&quot; mnemonicParsing=&quot;false&quot; onAction=&quot;#goBack&quot; prefHeight=&quot;50.0&quot; prefWidth=&quot;100.0&quot; style=&quot;-fx-background-color: DARKBLUE;&quot; text=&quot;Go back&quot; textFill=&quot;WHITE&quot; xmlns=&quot;http://javafx.com/javafx/17&quot; xmlns:fx=&quot;http://javafx.com/fxml/1&quot;&gt;   &lt;font&gt;      &lt;Font name=&quot;Comic Sans MS&quot; size=&quot;12.0&quot; /&gt;   &lt;/font&gt;   &lt;effect&gt;      &lt;Glow /&gt;   &lt;/effect&gt;&lt;/Button&gt;" fx:id="mainPaneAgencyLogIn" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AgencyLogInController">
    <center>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -25,6 +25,14 @@
                </font>
             </Label>
             <Button id="btnLogIn" fx:id="btnLogIn" layoutX="363.0" layoutY="442.0" mnemonicParsing="false" onAction="#checkValidity" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: DARKBLUE;" text="Log In" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Button id="btnGoBack" fx:id="btnGoBack" layoutX="621.0" layoutY="499.0" mnemonicParsing="false" onAction="#goBack" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: DARKBLUE;" text="Go back" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="12.0" />
                </font>
