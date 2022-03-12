@@ -16,8 +16,8 @@ import java.util.Objects;
 
 public class Main extends Application {
 
-//    private static final EntityManagerFactory entityManagerFactory =
-//            Persistence.createEntityManagerFactory("ro.tutorial.lab.SD");
+    private static final EntityManagerFactory entityManagerFactory =
+            Persistence.createEntityManagerFactory("ro.tutorial.lab.SD");
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -33,11 +33,14 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        //EntityManager em = entityManagerFactory.createEntityManager();
+        //em.getTransaction().begin();
+
         //service.TravellingAgencyService travellingAgencyService = new TravellingAgencyService();
         //travellingAgencyService.insertAgencyPassword("1","agency123");
 
-        //EntityManager em = entityManagerFactory.createEntityManager();
-        service.VacationDestinationService destinationService = new VacationDestinationService();
+
+        //service.VacationDestinationService destinationService = new VacationDestinationService();
         //destinationService.insertDestination("Maldive");
 
 //        Destination newDestination = new Destination("1", "Maldive");

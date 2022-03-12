@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane id="mainPaneEditPackage" fx:id="mainPaneEditPackage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.agencyOptions.EditPackageController">
+   <center>
+      <AnchorPane prefHeight="600.0" prefWidth="800.0">
+         <children>
+            <Label layoutX="239.0" layoutY="102.0" text="Edit vacation package" textFill="#161369" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="258.33333333333326">
+               <font>
+                  <Font name="Comic Sans MS" size="30.0" />
+               </font>
+            </Label>
+            <Button id="btnGoBack" fx:id="btnGoBack" layoutX="651.0" layoutY="529.0" mnemonicParsing="false" onAction="#goBack" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: DARKBLUE;" text="Go back" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Label layoutX="91.0" layoutY="186.0" text="Select package to edit:" textFill="#161369">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox id="cbEditPackage" fx:id="cbEditPackage" layoutX="301.0" layoutY="188.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#selectPackageToEdit" prefHeight="25.0" prefWidth="376.0" />
+            <TextField id="tfName" fx:id="tfName" layoutX="159.0" layoutY="237.0" prefHeight="25.0" prefWidth="520.0" visible="false" />
+            <Button id="btnSave" fx:id="btnSave" layoutX="344.0" layoutY="499.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="50.0" prefWidth="128.0" style="-fx-background-color: DARKBLUE;" text="Save changes" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Label id="lblPackageName" fx:id="lblPackageName" layoutX="93.0" layoutY="235.0" text="name:" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <Label id="lblPackagePrice" fx:id="lblPackagePrice" layoutX="94.0" layoutY="271.0" text="price:" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <TextField id="tfPrice" fx:id="tfPrice" layoutX="160.0" layoutY="273.0" prefHeight="25.0" prefWidth="129.0" visible="false" />
+            <Label id="lblStartDate" fx:id="lblStartDate" layoutX="94.0" layoutY="308.0" text="start date:" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker id="dpStart" fx:id="dpStart" layoutX="203.0" layoutY="308.0" visible="false" />
+            <Label id="lblEndDate" fx:id="lblEndDate" layoutX="408.0" layoutY="307.0" text="end date:" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker id="dpEnd" fx:id="dpEnd" layoutX="502.0" layoutY="308.0" visible="false" />
+            <Label id="lblExtra" fx:id="lblExtra" layoutX="94.0" layoutY="342.0" text="extra details:" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <Label id="lblNumber" fx:id="lblNumber" layoutX="95.0" layoutY="411.0" text="number of people that can make a booking:" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <TextField id="tfNumber" fx:id="tfNumber" layoutX="470.0" layoutY="412.0" prefHeight="25.0" prefWidth="211.0" visible="false" />
+            <Label id="lblStatus" fx:id="lblStatus" layoutX="95.0" layoutY="445.0" text="status:" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <TextField id="tfStatus" fx:id="tfStatus" editable="false" layoutX="173.0" layoutY="446.0" prefHeight="25.0" prefWidth="211.0" visible="false" />
+            <TextArea id="taExtra" fx:id="taExtra" layoutX="225.0" layoutY="344.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="455.0" visible="false" />
+            <Label id="lblDestination" fx:id="lblDestination" layoutX="333.0" layoutY="272.0" text="destination:" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <Label id="lblEuro" fx:id="lblEuro" layoutX="295.0" layoutY="272.0" text="€" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox id="cbDestination" fx:id="cbDestination" layoutX="448.0" layoutY="272.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#selectDestination" prefHeight="25.0" prefWidth="231.0" visible="false" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

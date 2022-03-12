@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,10 +21,10 @@ public class Package {
     private String price;
 
     @Column
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column
-    private Date endDate;
+    private LocalDate endDate;
 
     @Column
     private String extraDetails;
@@ -37,7 +38,7 @@ public class Package {
     public Package() {
     }
 
-    public Package(String id, Destination destination, String name, String price, Date startDate, Date endDate,
+    public Package(String id, Destination destination, String name, String price, LocalDate startDate, LocalDate endDate,
                    String extraDetails, Integer numberOfBookings, String status) {
         this.id = id;
         this.destination = destination;
@@ -74,19 +75,23 @@ public class Package {
         this.price = price;
     }
 
-    public Date getStartDate() {
+    public Destination getDestination() { return destination; }
+
+    public void setDestination(Destination destination) { this.destination = destination; }
+
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -112,5 +117,18 @@ public class Package {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Package \"" + name + "\"\n" +
+                "id = " + id +
+                ", destination: " + destination.getDestination() +
+                ", price: " + price + "€" + "\n" +
+                "startDate: " + startDate +
+                ", endDate: " + endDate + "\n" +
+                "extraDetails: " + extraDetails + "\n" +
+                "number of possible bookings: " + numberOfBookings +
+                ", status: " + status + "\n";
     }
 }

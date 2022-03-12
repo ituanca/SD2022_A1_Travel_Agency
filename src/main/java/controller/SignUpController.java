@@ -68,18 +68,28 @@ public class SignUpController{
             alert.setContentText("Please fill in a valid email address");
             alert.show();
             return false;
+        }else if(userService.checkIfEmailExistsAndRetrieveIt(getEmail())!=null){
+            alert.setContentText("There already exists an account associated to this email address.");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+            return false;
         }
         return true;
     }
 
     private boolean checkIfValidUsername(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        String password = userService.checkIfUsernameExistsAndFindPassword(getUsername());
         if(!userService.checkIfValidUsername(getUsername())){
-            alert.setContentText("Your username should have at least 8 characters "
+            alert.setContentText("Your username should have at least 7 characters "
                     + "and it can contain lowercase letters, "
                     + "uppercase letters and numeric values");
             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
+            return false;
+        }else if (password != null){
+            alert.setContentText("This username already exists");
+            alert.show();
             return false;
         }
         return true;

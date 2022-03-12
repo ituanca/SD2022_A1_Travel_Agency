@@ -24,7 +24,6 @@ public class AddPackagesController implements Initializable {
     public TextField tfPrice;
     public DatePicker dpStart;
     public DatePicker dpEnd;
-    public TextField tfExtra;
     public TextField tfNumber;
     public Label lblSelectDestination;
     public Label lblPackageName;
@@ -33,20 +32,30 @@ public class AddPackagesController implements Initializable {
     public Label lblEndDate;
     public Label lblExtra;
     public Label lblNumber;
+    public TextArea taExtra;
 
     VacationPackagesService packagesService = new VacationPackagesService();
 
+    public void goBack(ActionEvent actionEvent) {
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("agencyOptions");
+        mainPaneAddPackages.setCenter(view);
+    }
 
     public void addPackage(ActionEvent actionEvent) {
         if(checkIfFieldsAreNotEmpty() && checkIfValidPeriod() && checkIfValidNumber()){
+            FxmlLoader object = new FxmlLoader();
+            packagesService.addPackage(getSelection(), getName(), getPrice(), getStartDate(), getEndDate(),
+                    getExtraDetails(), getNumberOfBookings());
             showConfirmation();
-            packagesService.addPackage(getSelection(), getName(), getPrice(), getStartDate(), getEndDate(),getExtraDetails(), getNumberOfBookings());
+            Pane view = object.getPage("agencyOptions");
+            mainPaneAddPackages.setCenter(view);
         }
     }
 
     private void showConfirmation(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Account was created successfully.");
+        alert.setContentText("Package was added successfully.");
         alert.show();
     }
 
@@ -59,7 +68,7 @@ public class AddPackagesController implements Initializable {
         lblEndDate.setVisible(true);
         tfName.setVisible(true);
         tfPrice.setVisible(true);
-        tfExtra.setVisible(true);
+        taExtra.setVisible(true);
         dpStart.setVisible(true);
         dpEnd.setVisible(true);
         tfNumber.setVisible(true);
@@ -114,19 +123,13 @@ public class AddPackagesController implements Initializable {
         return true;
     }
 
-    public void goBack(ActionEvent actionEvent) {
-        FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("agencyOptions");
-        mainPaneAddPackages.setCenter(view);
-    }
-
     private String getSelection() { return (String) cbDestinations.getValue(); }
 
     private String getName() { return tfName.getText(); }
 
     private String getPrice() { return tfPrice.getText(); }
 
-    private String getExtraDetails() { return tfExtra.getText(); }
+    private String getExtraDetails() { return taExtra.getText(); }
 
     private String getNumberOfBookings() { return tfNumber.getText(); }
 

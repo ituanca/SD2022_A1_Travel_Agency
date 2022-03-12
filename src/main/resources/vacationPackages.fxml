@@ -1,23 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane id="mainPanePackages" fx:id="mainPanePackages" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VacationPackagesController">
    <center>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
-            <Label layoutX="273.0" layoutY="74.0" text="Vacation Packages" textFill="#161369">
+            <Label layoutX="206.0" layoutY="75.0" text="Available Vacation Packages" textFill="#161369">
                <font>
                   <Font name="Comic Sans MS" size="30.0" />
                </font>
             </Label>
-            <Button id="btnGoBack" fx:id="btnGoBack" layoutX="621.0" layoutY="499.0" mnemonicParsing="false" onAction="#goBack" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: DARKBLUE;" text="Go back" textFill="WHITE">
+            <Button id="btnGoBack" fx:id="btnGoBack" layoutX="651.0" layoutY="529.0" mnemonicParsing="false" onAction="#goBack" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: DARKBLUE;" text="Go back" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <ListView id="listViewPackages" fx:id="listViewPackages" layoutX="41.0" layoutY="311.0" prefHeight="198.0" prefWidth="715.0" visible="false">
+               <opaqueInsets>
+                  <Insets top="-6.0" />
+               </opaqueInsets>
+            </ListView>
+            <Label layoutX="55.0" layoutY="132.0" text="Filter by:" textFill="#161369">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox id="cbDestination" fx:id="cbDestination" layoutX="187.0" layoutY="165.0" onAction="#selectDestination" prefHeight="25.0" prefWidth="183.0" />
+            <Label layoutX="67.0" layoutY="162.0" prefHeight="25.0" prefWidth="110.0" text="destination:" textFill="#161369">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="67.0" layoutY="195.0" prefHeight="25.0" prefWidth="60.0" text="price:" textFill="#161369">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="437.0" layoutY="195.0" prefHeight="25.0" prefWidth="104.0" text="start date:" textFill="#161369">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker id="dpStart" fx:id="dpStart" layoutX="546.0" layoutY="197.0" prefHeight="25.0" prefWidth="183.0" />
+            <Label layoutX="437.0" layoutY="228.0" prefHeight="25.0" prefWidth="104.0" text="end date:" textFill="#161369">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker id="dpStartEnd" fx:id="dpEnd" layoutX="547.0" layoutY="230.0" prefHeight="25.0" prefWidth="183.0" />
+            <TextField id="tfMinimumPrice" fx:id="tfMinimumPrice" layoutX="218.0" layoutY="198.0" prefHeight="25.0" prefWidth="152.0" />
+            <Label layoutX="130.0" layoutY="196.0" prefHeight="25.0" prefWidth="90.0" text="minimum:" textFill="#161369">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <TextField id="tfMaximumPrice" fx:id="tfMaximumPrice" layoutX="218.0" layoutY="232.0" prefHeight="25.0" prefWidth="152.0" />
+            <Label layoutX="130.0" layoutY="230.0" prefHeight="25.0" prefWidth="90.0" text="maximum:" textFill="#161369">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <Button id="btnFilter" fx:id="btnFilter" layoutX="628.0" layoutY="146.0" mnemonicParsing="false" onAction="#filter" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: DARKBLUE;" text="Filter" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Label id="lblSelection" fx:id="lblSelection" layoutX="57.0" layoutY="279.0" text="You selected" textFill="#161369" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <TextField id="tfSelectedOption" fx:id="tfSelectedOption" editable="false" layoutX="186.0" layoutY="279.0" prefHeight="25.0" prefWidth="223.0" visible="false" />
+            <Button id="btnClear" fx:id="btnClear" layoutX="498.0" layoutY="146.0" mnemonicParsing="false" onAction="#clear" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: DARKBLUE;" text="Clear filters" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="12.0" />
                </font>

@@ -34,6 +34,10 @@ public class UserService {
         return userRepository.findUsernameAndRetrievePassword(username);
     }
 
+    public String checkIfEmailExistsAndRetrieveIt(String email){
+        return userRepository.findEmail(email);
+    }
+
     public boolean checkIfValidName(String name){
         NameValidator nameValidator = new NameValidator();
         return nameValidator.validate(name) == CasesOfInvalidations.GOOD;
@@ -45,8 +49,8 @@ public class UserService {
     }
 
     public boolean checkIfValidUsername(String username){
-        UsernameValidator emailValidator = new UsernameValidator();
-        return emailValidator.validate(username) == CasesOfInvalidations.GOOD;
+        UsernameValidator usernameValidator = new UsernameValidator();
+        return usernameValidator.validate(username) == CasesOfInvalidations.GOOD;
     }
 
     public String checkIfValidPassword(String password){
@@ -58,11 +62,4 @@ public class UserService {
         }return "ok";
     }
 
-    boolean checkIfAlreadyExists(String string){
-        return userRepository.checkIfExistent(string);
-    }
-
-    public boolean findByUsername(String username){
-        return userRepository.checkIfExistent(username);
-    }
 }

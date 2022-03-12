@@ -47,6 +47,8 @@ public class VacationDestinationRepository {
 
     public void deleteDestination( String destination){
         em.getTransaction().begin();
+        String destinationId = findDestinationNameAndRetrieveId(destination);
+        createQueryForDeletePackage(destinationId);
         createQueryForDeleteDestination(destination);
         em.getTransaction().commit();
         em.close();
@@ -55,6 +57,12 @@ public class VacationDestinationRepository {
     private void createQueryForDeleteDestination(String destination){
         em.createQuery("delete Destination where destination = :destination")
                 .setParameter("destination", destination)
+                .executeUpdate();
+    }
+
+    private void createQueryForDeletePackage(String destinationId) {
+        em.createQuery("delete Package where destinationId = :destinationId")
+                .setParameter("destinationId", destinationId)
                 .executeUpdate();
     }
 

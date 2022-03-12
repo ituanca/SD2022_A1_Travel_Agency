@@ -1,5 +1,6 @@
 package repository;
 
+import model.Package;
 import model.User;
 
 import javax.persistence.*;
@@ -11,7 +12,6 @@ public class UserRepository {
     private static final EntityManagerFactory entityManagerFactory =
             Persistence.createEntityManagerFactory("ro.tutorial.lab.SD");
     EntityManager em = entityManagerFactory.createEntityManager();
-
 
     public void insertUser(String firstName, String lastName, String email, String username, String password){
         em.getTransaction().begin();
@@ -43,6 +43,17 @@ public class UserRepository {
                 .setParameter("username", string);
             User user = (User) query.getSingleResult();
             return user.getPassword();
+        }catch(NoResultException e) {
+            return null;
+        }
+    }
+
+    public String findEmail(String string) {
+        try{
+            Query query = em.createQuery("SELECT u from User u WHERE u.email = :email", User.class)
+                    .setParameter("email", string);
+            User user = (User) query.getSingleResult();
+            return user.getEmail();
         }catch(NoResultException e) {
             return null;
         }
