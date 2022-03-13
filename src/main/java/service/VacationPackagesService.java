@@ -1,13 +1,9 @@
 package service;
 
-import com.mysql.cj.util.StringUtils;
-import model.Package;
 import repository.VacationDestinationRepository;
 import repository.VacationPackagesRepository;
 import service.validators.*;
 
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,7 +41,7 @@ public class VacationPackagesService {
 
     public String checkIfDestinationNameExistsAndRetrieveId(String string){
         VacationDestinationRepository destinationRepository = new VacationDestinationRepository();
-        return destinationRepository.findDestinationNameAndRetrieveId(string);
+        return destinationRepository.findDestinationByNameAndRetrieveId(string);
     }
 
     public ArrayList<String> getPackagesNames() throws SQLException {
@@ -89,6 +85,11 @@ public class VacationPackagesService {
     public ArrayList<String> findPackagesInPriceInterval(String minimum, String maximum){
         return packagesRepository.findPackagesInPriceInterval(minimum, maximum);
     }
+
+//    public ArrayList<String> findPackagesByDestinationId(String destinationId){
+//        return packagesRepository.findPackagesByDestinationId(destinationId);
+//    }
+
 
     public String findPackageName(String name) {
         return packagesRepository.getPackageName(name);

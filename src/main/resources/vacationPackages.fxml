@@ -96,6 +96,14 @@
                   <Glow />
                </effect>
             </Button>
+            <Button id="btnBook" fx:id="btnBook" layoutX="50.0" layoutY="529.0" mnemonicParsing="false" onAction="#book" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: DARKBLUE;" text="Book" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
          </children>
       </AnchorPane>
    </center>

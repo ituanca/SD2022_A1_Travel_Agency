@@ -30,7 +30,7 @@
                   <Font name="Comic Sans MS" size="18.0" />
                </font>
             </Label>
-            <ComboBox id="cbDeletePackage" fx:id="cbDeletePackage" layoutX="127.0" layoutY="258.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#selectPackageToDelete" prefHeight="25.0" prefWidth="543.0" visibleRowCount="3" />
+            <ComboBox id="cbDeletePackage" fx:id="cbDeletePackage" layoutX="127.0" layoutY="258.0" onAction="#selectPackageToDelete" prefHeight="25.0" prefWidth="543.0" visibleRowCount="3" />
             <Button id="btnDeletePackage" fx:id="btnDeletePackage" layoutX="330.0" layoutY="322.0" mnemonicParsing="false" onAction="#deletePackage" prefHeight="50.0" prefWidth="128.0" style="-fx-background-color: DARKBLUE;" text="Delete package" textFill="WHITE" visible="false">
                <font>
                   <Font name="Comic Sans MS" size="12.0" />

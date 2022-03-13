@@ -1,9 +1,7 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -26,15 +24,19 @@ public class User {
     @Column
     private String password;
 
+    @OneToMany(mappedBy = "user")
+    private List<Booking> bookings;
+
     public User(){}
 
-    public User(String id, String firstName, String lastName, String username, String email, String password) {
+    public User(String id, String firstName, String lastName, String username, String email, String password, List<Booking> bookings) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.bookings = bookings;
     }
 
     public String getId() {
@@ -83,5 +85,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

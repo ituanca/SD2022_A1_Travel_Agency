@@ -6,8 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import org.hibernate.mapping.Array;
+import service.BookingService;
+import service.VacationDestinationService;
 import service.VacationPackagesService;
 
 import java.net.URL;
@@ -29,8 +29,10 @@ public class VacationPackagesController implements Initializable {
     public Label lblSelection;
     public TextField tfSelectedOption;
     public Button btnClear;
+    public Button btnBook;
 
     VacationPackagesService packageService = new VacationPackagesService();
+    BookingService bookingService = new BookingService();
 
     public void goBack(ActionEvent actionEvent) {
         FxmlLoader object = new FxmlLoader();
@@ -38,9 +40,15 @@ public class VacationPackagesController implements Initializable {
         mainPanePackages.setCenter(view);
     }
 
+    private ArrayList<String> getDestinations() throws SQLException {
+        VacationDestinationService destinationService = new VacationDestinationService();
+        return destinationService.getDestinations();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            cbDestination.getItems().addAll(getDestinations());
             listViewPackages.getItems().addAll(packageService.getPackages());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -53,97 +61,134 @@ public class VacationPackagesController implements Initializable {
     public void filter(ActionEvent actionEvent) throws SQLException {
         ArrayList<String> packagesFilteredByPeriod = findPackagesByPeriodPreferences();
         ArrayList<String> packagesFilteredByPrice = findPackagesByPriceIntervalPreferences();
-        if(packagesFilteredByPeriod!=null || packagesFilteredByPrice!=null) {
-            listViewPackages.getItems().clear();
-            makeIntersection(packagesFilteredByPrice, packagesFilteredByPeriod);
+        //ArrayList<String> packagesFilteredByDestination = findPackagesByDestination();
+        if(getMinimumPrice().equals("") && getMaximumPrice().equals("") && getStartDate() == null && getEndDate() == null){
+            listViewPackages.getItems().addAll(packageService.getPackages());
+        }else{
+            if (packagesFilteredByPeriod != null || packagesFilteredByPrice != null) {
+                listViewPackages.getItems().clear();
+                makeIntersection(packagesFilteredByPrice, packagesFilteredByPeriod);
+            }
         }
         listViewPackages.setVisible(true);
-        selectPackage(listViewPackages);
+        selectPackageFromListView(listViewPackages);
     }
 
     private void makeIntersection(ArrayList<String> packages1, ArrayList<String> packages2) throws SQLException {
         boolean atLeastOneSolution = false;
         for (String packageInstance : packageService.getPackages()) {
-            if (packages1.isEmpty()){
-                if( packages2.contains(packageInstance) ){
-                    atLeastOneSolution = true;
-                    listViewPackages.getItems().addAll(packageInstance);
+            if (packages1.isEmpty()) {
+                if(checkIfValidPeriod()) {
+                    if (packages2.contains(packageInstance)) {
+                        atLeastOneSolution = true;
+                        listViewPackages.getItems().addAll(packageInstance);
+                    }
                 }
-            } else if (packages2.isEmpty()){
-                if (packages1.contains(packageInstance)){
-                    atLeastOneSolution = true;
-                    listViewPackages.getItems().addAll(packageInstance);
+            } else if (packages2.isEmpty()) {
+                if(!getMinimumPrice().isEmpty() || !getMaximumPrice().isEmpty()) {
+                    if (checkIfPriceIntervalIsValid()) {
+                        if (packages1.contains(packageInstance)) {
+                            atLeastOneSolution = true;
+                            listViewPackages.getItems().addAll(packageInstance);
+                        }
+                    }
                 }
-            }else {
-                if (packages1.contains(packageInstance) && packages2.contains(packageInstance)) {
-                    atLeastOneSolution = true;
-                    listViewPackages.getItems().addAll(packageInstance);
-                }
+            } else if (packages1.contains(packageInstance) && packages2.contains(packageInstance)) {
+                atLeastOneSolution = true;
+                listViewPackages.getItems().addAll(packageInstance);
             }
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
         if(!atLeastOneSolution){
             alert.setContentText("We have not found any package for you");
             alert.show();
+            listViewPackages.getItems().clear();
         }
     }
+
+//    private ArrayList<String> findPackagesByDestination() throws SQLException {
+//        String destinationId = packageService.checkIfDestinationNameExistsAndRetrieveId(getDestinationSelection());
+//        ArrayList<String> packages = new ArrayList<>();
+//        if(!getDestinationSelection().isEmpty()) {
+//            packages = packageService.findPackagesByDestinationId(destinationId);
+//            if (packages.isEmpty()) {
+//                listViewPackages.getItems().clear();
+//            }
+//        }
+//        return packages;
+//    }
 
     private boolean checkIfPriceIntervalIsValid(){
-       return packageService.checkIfValidPriceInterval(getMinimumPrice(), getMaximumPrice());
+        return packageService.checkIfValidPriceInterval(getMinimumPrice(), getMaximumPrice());
     }
 
-    private ArrayList<String> findExistingPackagesInSelectedPriceInterval(){
-        return packageService.findPackagesInPriceInterval(getMinimumPrice(), getMaximumPrice());
-    }
-
-    private ArrayList<String> findPackagesByPriceIntervalPreferences(){
+    private boolean checkIfPriceIntervalIsValidWithErrorMessage(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        ArrayList<String> packages = new ArrayList<>();
-        if(!getMinimumPrice().isEmpty() || !getMaximumPrice().isEmpty()){
-            if(checkIfPriceIntervalIsValid()){
-                packages = findExistingPackagesInSelectedPriceInterval();
-                if(packages.isEmpty()){
-                    alert.setContentText("There are no packages at a price situated in the specified interval");
-                    alert.show();
-                    listViewPackages.getItems().clear();
-                }
-            }
-        }
-        return packages;
-    }
-
-
-    private ArrayList<String> findExistingPackagesWithSelectedPeriod(){
-        return packageService.findPackagesWithSelectedPeriod(getStartDate(), getEndDate());
-    }
-
-    private boolean checkIfValidPeriod(){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        if(!packageService.checkIfValidPeriod(getStartDate(), getEndDate())){
-            alert.setContentText("Please select a valid time interval");
+        if(!packageService.checkIfValidPriceInterval(getMinimumPrice(), getMaximumPrice())) {
+            alert.setContentText("Please select a valid price interval");
             alert.show();
             return false;
         }
         return true;
     }
 
-    private ArrayList<String> findPackagesByPeriodPreferences(){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    private ArrayList<String> findPackagesByPriceIntervalPreferences(){
         ArrayList<String> packages = new ArrayList<>();
-        if(getStartDate()!=null && getEndDate()!=null && checkIfValidPeriod()){
-            packages = findExistingPackagesWithSelectedPeriod();
-            System.out.println(packages);
-            if(packages.isEmpty()){
-                alert.setContentText("There are no packages for the selected period");
-                alert.show();
-                listViewPackages.getItems().clear();
+        if(!getMinimumPrice().isEmpty() || !getMaximumPrice().isEmpty()){
+            if(checkIfPriceIntervalIsValidWithErrorMessage()){
+                packages = packageService.findPackagesInPriceInterval(getMinimumPrice(), getMaximumPrice());
             }
+            listViewPackages.getItems().clear();
         }
-        System.out.println(packages);
         return packages;
     }
 
-    public void selectPackage(ListView listView){
+    private boolean checkIfValidPeriodWithErrorMessage(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        if(getStartDate()!=null && getEndDate()!=null){
+            if(!packageService.checkIfValidPeriod(getStartDate(), getEndDate())){
+                listViewPackages.getItems().clear();
+                alert.setContentText("Please select a valid time interval");
+                alert.show();
+                return false;
+            }
+        }else if(getStartDate()==null && getEndDate()!=null){
+            listViewPackages.getItems().clear();
+            alert.setContentText("Please select a start date");
+            alert.show();
+            return false;
+        }else if(getStartDate()!=null && getEndDate()==null){
+            listViewPackages.getItems().clear();
+            alert.setContentText("Please select an end date");
+            alert.show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkIfValidPeriod(){
+        if(getStartDate() != null && getEndDate() != null){
+            return packageService.checkIfValidPeriod(getStartDate(), getEndDate());
+        }else if(getStartDate() != null && getEndDate() == null){
+            listViewPackages.getItems().clear();
+            return false;
+        }else if (getStartDate() == null && getEndDate() != null) {
+            listViewPackages.getItems().clear();
+            return false;
+        }
+        return true;
+    }
+
+    private ArrayList<String> findPackagesByPeriodPreferences(){
+        ArrayList<String> packages = new ArrayList<>();
+        if(checkIfValidPeriodWithErrorMessage()){
+            packages =  packageService.findPackagesWithSelectedPeriod(getStartDate(), getEndDate());
+        }
+        listViewPackages.getItems().clear();
+        return packages;
+    }
+
+    public void selectPackageFromListView(ListView listView){
         listView.setOnMouseClicked(new ListViewHandler(){
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -151,15 +196,26 @@ public class VacationPackagesController implements Initializable {
                     tfSelectedOption.setText(packageService.getPackageName(getSelectionAsString()));
                     lblSelection.setVisible(true);
                     tfSelectedOption.setVisible(true);
+                    btnBook.setVisible(true);
                 }
             }
         });
     }
 
     public void clear(ActionEvent actionEvent) {
-        tfMinimumPrice.setText("");
-        tfMaximumPrice.setText("");
-//        cbDestination.setValue("");
+        tfMinimumPrice.clear();
+        tfMaximumPrice.clear();
+        cbDestination.valueProperty().set(null);
+        dpStart.setValue(null);
+        dpEnd.setValue(null);
+    }
+
+    public void book(ActionEvent actionEvent) {
+        FxmlLoader object = new FxmlLoader();
+        String packageName = packageService.getPackageName(getSelectionAsString());
+        //bookingService.createBooking(packageName);
+        Pane view = object.getPage("registeredBooking");
+        mainPanePackages.setCenter(view);
     }
 
     private String getSelectionAsString() {

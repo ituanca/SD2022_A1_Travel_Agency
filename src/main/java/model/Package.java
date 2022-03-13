@@ -3,6 +3,7 @@ package model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -35,11 +36,14 @@ public class Package {
     @Column
     private String status;
 
+    @OneToMany(mappedBy = "packageId")
+    private List<Booking> bookings;
+
     public Package() {
     }
 
     public Package(String id, Destination destination, String name, String price, LocalDate startDate, LocalDate endDate,
-                   String extraDetails, Integer numberOfBookings, String status) {
+                   String extraDetails, Integer numberOfBookings, String status, List<Booking> bookings) {
         this.id = id;
         this.destination = destination;
         this.name = name;
@@ -49,6 +53,7 @@ public class Package {
         this.extraDetails = extraDetails;
         this.numberOfBookings = numberOfBookings;
         this.status = status;
+        this.bookings = bookings;
     }
 
     public String getId() {
@@ -117,6 +122,14 @@ public class Package {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     @Override

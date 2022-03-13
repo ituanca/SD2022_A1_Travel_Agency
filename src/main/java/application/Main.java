@@ -16,8 +16,8 @@ import java.util.Objects;
 
 public class Main extends Application {
 
-    private static final EntityManagerFactory entityManagerFactory =
-            Persistence.createEntityManagerFactory("ro.tutorial.lab.SD");
+//    private static final EntityManagerFactory entityManagerFactory =
+//            Persistence.createEntityManagerFactory("ro.tutorial.lab.SD");
 
     @Override
     public void start(Stage primaryStage) throws Exception{

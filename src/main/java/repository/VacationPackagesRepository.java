@@ -187,6 +187,22 @@ public class VacationPackagesRepository {
         }
     }
 
+//    public ArrayList<String> findPackagesByDestinationId(String destinationId){
+//        try{
+//            Query query = em.createQuery("SELECT u from Package u WHERE u.destinationId=:destinationId", Package.class)
+//                    .setParameter("destinationId", destinationId);
+//            ArrayList<String> listString = new ArrayList<>();
+//            for(Object o : query.getResultList()){
+//                Package packageInstance = (Package) o;
+//                String packageString = packageInstance.toString();
+//                listString.add(packageString);
+//            }
+//            return listString;
+//        }catch(NoResultException e) {
+//            return null;
+//        }
+//    }
+
     public String getPackageId(String packageName){
         Package packageInstance = findPackage(packageName);
         return packageInstance.getId();
